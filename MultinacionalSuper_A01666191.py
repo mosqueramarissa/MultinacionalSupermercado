@@ -92,25 +92,25 @@ z_score = (8.5 - rating_mean) / (rating_std / np.sqrt(30))  # Asumiendo n=30 par
 prob_rating_alto = 1 - norm.cdf(z_score)
 
 # Impresión de resultados
-print("\n=== Resultados del Análisis ===")
-print(f"\nPasos 1-4: Análisis de Ventas y Gastos")
-print(f"Parámetros de la distribución beta: α = {a:.2f}, β = {b:.2f}")
-print(f"Media de ventas: ${mu:,.2f}")
-print(f"Desviación estándar de ventas: ${sigma:,.2f}")
-print(f"Gastos totales mensuales: ${gastos_tot:,.2f}")
-print(f"Número de ventas necesarias mensuales: {N:.0f}")
+print(f'''\n=== Resultados del Análisis ===
+\nPasos 1-4: Análisis de Ventas y Gastos
+Parámetros de la distribución beta: α = {a:.2f}, β = {b:.2f}
+Media de ventas: ${mu:,.2f}
+Desviación estándar de ventas: ${sigma:,.2f}
+Gastos totales mensuales: ${gastos_tot:,.2f}
+Número de ventas necesarias mensuales: {N:.0f}''')
 
-print(f"\nPaso 5: Análisis de Población")
-print(f"Personas necesarias por mes: {personas_necesarias:.0f}")
-print(f"Porcentaje de la población a convencer: {porcentaje_poblacion:.1f}%")
+print(f'''\nPaso 5: Análisis de Población
+Personas necesarias por mes: {personas_necesarias:.0f}
+Porcentaje de la población a convencer: {porcentaje_poblacion:.1f}%''')
 
-print(f"\nPasos 6-8: Análisis de Ratings")
-print(f"Media de ratings: {rating_mean:.2f}")
-print(f"Desviación estándar de ratings: {rating_std:.2f}")
-print(f"Probabilidad de rating ≥ 8.5: {prob_rating_alto:.2%}")
+print(f'''\nPasos 6-8: Análisis de Ratings
+Media de ratings: {rating_mean:.2f}
+Desviación estándar de ratings: {rating_std:.2f}
+Probabilidad de rating ≥ 8.5: {prob_rating_alto:.2%}''')
 
-print("\nPuntos de Mejora Sugeridos:")
-print("1. Revisar el cálculo de consumo eléctrico con datos actualizados de CFE")
-print("2. Incluir gastos de agua y otros servicios")
-print("3. Considerar variaciones en frecuencia de compra por temporada")
-print("4. Evaluar necesidad de personal adicional en horas pico")
+print(''' \nPuntos de Mejora Sugeridos:
+      1. Revisar el cálculo de consumo eléctrico con datos actualizados de CFE
+      2. Incluir gastos de agua y otros servicios
+      3. Considerar variaciones en frecuencia de compra por temporada
+      4. Evaluar necesidad de personal adicional en horas pico''')
