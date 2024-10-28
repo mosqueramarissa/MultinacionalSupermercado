@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 from scipy.stats import beta, norm
+import matplotlib.pyplot as plt
 
 # Lectura y procesamiento inicial de datos
 df = pd.read_csv('SuperMarketData.csv')
@@ -24,7 +25,6 @@ var = (max_sales-min_sales)**2 * var_norm
 sigma = np.sqrt(var)
 
 # Cálculo de gastos operativos
-# Salarios
 dias_trab = 24
 fact = 1.15  # Factor de incremento salarial (15%)
 
@@ -71,12 +71,46 @@ c_ = ingreso**2
 # Resolución de la ecuación cuadrática
 N1 = (-b_ + np.sqrt(b_**2 - 4*a_*c_))/(2*a_)
 N2 = (-b_ - np.sqrt(b_**2 - 4*a_*c_))/(2*a_)
+N = max(N1, N2)
+
+# Análisis de población y porcentaje necesario
+poblacion_total = 40000
+compras_por_semana = 1
+semanas_por_mes = 4
+
+# Cálculo del número de personas necesarias
+personas_necesarias = N / (compras_por_semana * semanas_por_mes)
+porcentaje_poblacion = (personas_necesarias / poblacion_total) * 100
+
+# Análisis de ratings (asumiendo que están en el DataFrame)
+ratings = np.array(df['Rating'])
+rating_mean = np.mean(ratings)
+rating_std = np.std(ratings)
+
+# Probabilidad de rating >= 8.5 usando Teorema del Límite Central
+z_score = (8.5 - rating_mean) / (rating_std / np.sqrt(30))  # Asumiendo n=30 para TCL
+prob_rating_alto = 1 - norm.cdf(z_score)
 
 # Impresión de resultados
+print("\n=== Resultados del Análisis ===")
+print(f"\nPasos 1-4: Análisis de Ventas y Gastos")
 print(f"Parámetros de la distribución beta: α = {a:.2f}, β = {b:.2f}")
-print(f"Media normalizada: {mu_norm:.4f}")
-print(f"Desviación estándar normalizada: {std_norm:.4f}")
-print(f"Media real: ${mu:,.2f}")
-print(f"Desviación estándar real: ${sigma:,.2f}")
+print(f"Media de ventas: ${mu:,.2f}")
+print(f"Desviación estándar de ventas: ${sigma:,.2f}")
 print(f"Gastos totales mensuales: ${gastos_tot:,.2f}")
-print(f"Número de ventas necesarias: {max(N1, N2):.0f}")
+print(f"Número de ventas necesarias mensuales: {N:.0f}")
+
+print(f"\nPaso 5: Análisis de Población")
+print(f"Personas necesarias por mes: {personas_necesarias:.0f}")
+print(f"Porcentaje de la población a convencer: {porcentaje_poblacion:.1f}%")
+
+print(f"\nPasos 6-8: Análisis de Ratings")
+print(f"Media de ratings: {rating_mean:.2f}")
+print(f"Desviación estándar de ratings: {rating_std:.2f}")
+print(f"Probabilidad de rating ≥ 8.5: {prob_rating_alto:.2%}")
+
+print("\nPuntos de Mejora Sugeridos:")
+print("1. Revisar el cálculo de consumo eléctrico con datos actualizados de CFE")
+print("2. Incluir gastos de agua y otros servicios")
+print("3. Considerar variaciones en frecuencia de compra por temporada")
+print("4. Evaluar necesidad de personal adicional en horas pico")
